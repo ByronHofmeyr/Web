@@ -1,63 +1,47 @@
-﻿function isEven(n) {
-    return n % 2 == 0;
-}
-
-
+﻿
 function permAlone(str) {
-    // first build an array of all combinations.
-    // How to build the array
-    // str abc will return abc, bac, bca, acb, cab, acb.
-    // then count permutations with no consecutive repeats.
 
-    console.log("str = ", str);
-    var strArray = str.split('');
-    console.log("strArray = ", strArray);
-    var c = [];
-    var n = str.length;
-    console.log("str.length = ", n);
-    for (i = 0; i < n; i++) {
-        console.log("i = ", i);
-        c.push(0);
-    }
+    //create variable to store number of perms without a repeat
+    var noDupes = 0;
 
-    console.log("c = ", c);
-    var output = [];
-    var temp;
-    i = 0;
-    while (i < n) {
-        //console.log("i = ", i);
-        //console.log("c[i] = ", (c[i]));
-        if ((c[i]) < i) {
-            if (isEven(i)) {
-                console.log("Is Even ");
-                //swap(A[0], A[i])
-                temp = strArray[0];
-                strArray[0] = strArray[i];
-                strArray[i] = temp;
-                console.log("strArray = ", strArray);
+    //split string into array
+    var strArray = str.split("");
+
+    // Call with an array of the original string
+    findPerm(strArray.length, strArray);
+
+    return noDupes;
+
+    //Heap's Algorithm
+    function findPerm(n, arr) {
+        // If only 1 element, just output the array
+        if (n == 1) {
+            //check for duplicates
+            if (!(/([a-zA-Z])\1+/).test(arr.join(""))) {
+                noDupes += 1;
             }
-            else {
-                //swap(A[c[i]], A[i])
-                console.log("Is Odd ");
-                temp = strArray[(c[i])];
-                strArray[(c[i])] = strArray[i];
-                strArray[i] = temp;
-                console.log("strArray = ", strArray);
-            }
-            console.log("Push string");
-            console.log("strArray = ", strArray);
-            output.push(strArray);
-            c[i] += (c[i]) + 1;
-            i = 0;
+            return;
         }
-        else {
-            c[i] = 0;
-            i++;
+
+        for (var i = 0; i < n; i += 1) {
+            findPerm(n - 1, arr);
+
+            // If n is even
+            if (n % 2 === 0) {
+                swap(i, n - 1);
+            } else {
+                swap(0, n - 1);
+            }
+        }
+
+        function swap(idxA, idxB) {
+            var tmp = arr[idxA];
+            arr[idxA] = arr[idxB];
+            arr[idxB] = tmp;
         }
     }
-    console.log("output = ", output);
-    console.log("str = ", str);
-    return str;
 }
 
-permAlone('aab');
+//call permAlone() with any string
+//permAlone("aab");
+

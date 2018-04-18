@@ -1,0 +1,34 @@
+﻿<!DOCTYPE html>
+<!-- How to use VS debubing described here
+    https://richnewman.wordpress.com/2017/04/11/debugging-javascripttypescript-using-visual-studio-2017-and-chrome/
+    https://docs.microsoft.com/en-us/windows/uwp/get-started/create-a-hello-world-app-js-uwp
+    -->
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>My Test Bench</title>
+
+    <script src="JavaScript.js"></script>
+
+</head>
+<body>
+    <button type="button" onclick="helloFunction()">Say Hello</button>
+    <button type="button" onclick="pairwise([1, 4, 2, 3, 0, 5], 7)">Say Running Function</button>
+    <script>
+
+
+
+
+        console.log("In script");
+        function helloFunction() {
+
+            console.log("In helloFunction");
+        }
+        window.onload = function () {
+            console.log("In window.onload");
+        }
+
+    </script>
+</body>
+
+</html>
