@@ -10,71 +10,111 @@ var TicTacToeObj = {
     "20": 0, "21": 0, "22": 0
 };
 
+var scoresObj = {
+    0: 0, 1: 0, 2: 0,
+    3: 0, 4: 0, 5: 0,
+    6: 0, 7: 0,
+};
+
 function iWin() {
     console.log("I Win");
 }
 
 function findEmptyBlock(set) {
+    if (debug) { console.log("findEmptyBlock Function"); }
+    if (debug) { console.log("set = ", set); }
     for (var x = 0; x < 3; x++) {
         // check the diagonals here
-        if (set == 7 && TicTacToeObj[x.toString() + x.toString()] == 0) {
+        if (set == 6 && TicTacToeObj[x.toString() + x.toString()] == 0) {
+            if (debug) { console.log("set 6"); }
             return (x.toString() + x.toString());
         } else {
-            if (set == 8 && TicTacToeObj[x.toString() + (2 - x).toString()] == 0) {
+            if (set == 7 && TicTacToeObj[x.toString() + (2 - x).toString()] == 0) {
+                if (debug) { console.log("set 7"); }
                 return (x.toString() + (2 - x).toString());
             }
         }
         for (var y = 0; y < 3; y++) {
             // check rows and columns
             if (set == x && TicTacToeObj[x.toString() + y.toString()] == 0) {
+                if (debug) { console.log("Rows"); }
                 return (x.toString() + y.toString());
-            } else {
-                if (set == (y + 4) && TicTacToeObj[y.toString() + x.toString()] == 0) {
-                    return (y.toString() + x.toString());
-                }
+            } 
+            if (set == (x + 3) && TicTacToeObj[y.toString() + x.toString()] == 0) {
+                if (debug) { console.log("columns"); }
+                if (debug) { console.log("(y + 3) = ", (y + 3)); }
+                if (debug) { console.log("x = ", x); }
+                if (debug) { console.log("y.toString() + x.toString() = ", y.toString() + x.toString()); }
+                return (y.toString() + x.toString());
             }
         }
     }
+    return false;
 }
 
-function decideMove(scoresObj) {
-    var winSet = false;    
-    var moveSet = false;   
-    for (var value in scoresObj) {
-        if (scoresObj.hasOwnProperty(value)) {
-            if (debug) { console.log("value = ", value) };
-            if (value = -2) {
-                winSet = scoreObj.hasOwnProperty(key);
-            } else {
-                if (value = 2) {
-                    moveSet = scoreObj.hasOwnProperty(key);
-                }
+function decideMove() {
+    if (debug) { console.log("decideMove Function"); }
+    var winSet = -1;    
+    var moveSet = -1;
+    var value
+    if (debug) { console.log("scoresObj = ", scoresObj); }
+    for (var key in scoresObj) {
+        value = scoresObj[key]; 
+        if (debug) { console.log("key = ", key); }
+        if (debug) { console.log("value = ", value) };
+        if (value == -2) {
+            winSet = key;
+            if (debug) { console.log("winSet = ", winSet); }
+            break;
+        } else {
+            if (value == 2) {
+                moveSet = key;
+                if (debug) { console.log("moveSet = ", moveSet); }
+                break;
             }
         }
     }
-    if (winSet) {
+    if (winSet > -1) {
+        if (debug) { console.log("winSet = ", winSet); }
         emptyBlock = findEmptyBlock(winSet);
+        if (debug) { console.log("emptyBlock = ", emptyBlock); }
         fillBox(emptyBlock, compSymbol);
         iWin();
         return;
     } else {
-        if (moveSet) {
-            emptyBlock = findEmptyBlock(moveSett);
-            fillBox(emptyBlock, compSymbol);
+        if (moveSet > -1) {
+            if (debug) { console.log("moveSet = ", moveSet); }
+            emptyBlock = findEmptyBlock(moveSet);
+            if (debug) { console.log("emptyBlock = ", emptyBlock); }
+            if (emptyBlock) { fillBox(emptyBlock, compSymbol); }
             return;
         }
     }
 
-
     if (TicTacToeObj["11"] == 0)
         fillBox("11", compSymbol);
     else {
-        fillBox("01", compSymbol);
+        emptyBlock = findEmptyBlock(0);
+        if (emptyBlock) {
+            fillBox(emptyBlock, compSymbol);
+        } else {
+            emptyBlock = findEmptyBlock(1);
+            if (emptyBlock) {
+                fillBox(emptyBlock, compSymbol);
+            }
+            else {
+                emptyBlock = findEmptyBlock(2);
+                if (emptyBlock) {
+                    fillBox(emptyBlock, compSymbol);
+                }
+            }
+        }
     }
 
 }
 
 function computersTurn() {
+    if (debug) { console.log("computersTurn Function"); }
     // I assign 1 to the TicTacToeObj for a players mark, and -1 for
     // a computer mark.
     // I then score each row, then each column, then each diagonal.
@@ -82,10 +122,10 @@ function computersTurn() {
     // or diagonal.
     // If I find a score of -2 I need to play that row to win the game.
 
-    var scoresObj = {
+    scoresObj = {
         0: 0, 1: 0, 2: 0,
         3: 0, 4: 0, 5: 0,
-        6: 0, 7: 0, 8: 0
+        6: 0, 7: 0
     };
 
     if (debug) { console.log("computersTurn()") };
@@ -93,63 +133,36 @@ function computersTurn() {
     var scoreCol = 0;
     var scoreDiag1 = 0;
     var scoreDiag2 = 0;
-//    var emptyRow = "";
-//    var emptyCol = "";
-//    var emptyDiag1 = "";
-//    var emptyDiag2 = "";
 
     for (var x = 0; x < 3; x++) {
         //if (debug) {console.log("x = ", x) };
         // could check the diagonals here
-        if (TicTacToeObj[x.toString() + x.toString()] == 0) {
-            // score Diagonal 1
-//            emptyDiag1 = (x.toString() + x.toString());
-        } else {
-            scoreDiag1 += TicTacToeObj[x.toString() + x.toString()];
-        }
-
-        if (TicTacToeObj[x.toString() + (2 - x).toString()] == 0) {
-            // score Diagonal 2
- //           emptyDiag2 = (x.toString() + (2 - x).toString());
-        } else {
-            scoreDiag2 += TicTacToeObj[x.toString() + (2 - x).toString()];
-        }
+        scoreDiag1 += TicTacToeObj[x.toString() + x.toString()];
+        // score Diagonal 2
+        scoreDiag2 += TicTacToeObj[x.toString() + (2 - x).toString()];
 
         for (var y = 0; y < 3; y++) {
-            //if (debug) {console.log("y = ", y) };
-            //if (debug) {console.log("x.toString() + y.toString() = ", (x.toString() + y.toString())) };
-            //if (debug) {console.log("TicTacToeObj[x.toString() + y.toString()] = ", TicTacToeObj[x.toString() + y.toString()]) };
-            if (TicTacToeObj[x.toString() + y.toString()] == 0) {
-                // score Rows
-//                emptyRow = (x.toString() + y.toString());
-            } else {
-                scoreRow += TicTacToeObj[x.toString() + y.toString()];
-            }
-            if (TicTacToeObj[y.toString() + x.toString()] == 0) {
-                // score Columns
-//                emptyCol = (y.toString() + x.toString());
-            } else {
-                scoreCol += TicTacToeObj[y.toString() + x.toString()];
-            }
+            // score Rows
+            scoreRow += TicTacToeObj[x.toString() + y.toString()];
+            // score Columns
+            scoreCol += TicTacToeObj[y.toString() + x.toString()];
         }
         scoresObj[x] = scoreRow;
         scoresObj[x+3] = scoreCol;
 
-
         scoreRow = 0;  // Initialise scoreRow before scoring next row.
         scoreCol = 0;  // Initialise scoreCol before scoring next col.
-
     }
 
-    scoresObj[7] = scoreDiag1;
-    scoresObj[8] = scoreDiag2;
-
-    decideMove(scoresObj);
+    scoresObj[6] = scoreDiag1;
+    scoresObj[7] = scoreDiag2;
+    if (debug) { console.log("scoresObj = ", scoresObj) };
+    decideMove();
     yourTurn = true;
 }
 
 function choice(button) {
-    //$("#choice").on('click',function(button){
+    if (debug) { console.log("choice Function"); }
     var x = button.id;
     if (debug) { console.log("choice = ", x); }
     if (x == "X") {
@@ -161,6 +174,7 @@ function choice(button) {
 }
 
 function fillBox(button, symbol) {
+    if (debug) { console.log("fillBox function") };
     if (debug) { console.log("button clicked = ", button); };
     document.getElementById(button).innerText = symbol;
     if (symbol === userSymbol) {
@@ -177,6 +191,7 @@ function clearBox(id) {
 }
 
 function clearAllBoxes() {
+    if (debug) { console.log("clearAllBoxes function") };
     TicTacToeObj = {
         "00": 0, "01": 0, "02": 0,
         "10": 0, "11": 0, "12": 0,
@@ -191,12 +206,14 @@ function clearAllBoxes() {
 }
 
 function onClick(button) {
+    if (debug) { console.log("onClick function") };
     var x = button.id;
+
     if (yourTurn) {
         fillBox(x, userSymbol);
         yourTurn = false;
         computersTurn();
-    }
+    } 
 }
 
 $(document).ready(function () {
