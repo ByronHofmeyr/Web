@@ -14,81 +14,58 @@ function iWin() {
     console.log("I Win");
 }
 
-function findEmptyBlock(winRow) {
-    for ()
-}
-
-function decideMove(scoresObj) {
-    var winRow = false;    
-    var moveRow = false;   
-    for (var value in scoresObj) {
-        if (scoresObj.hasOwnProperty(value)) {
-            if (debug) { console.log("value = ", value) };
-            if (value = -2) {
-                winRow = scoreObj.hasOwnProperty(key);
+function findEmptyBlock(set) {
+    for (var x = 0; x < 3; x++) {
+        // check the diagonals here
+        if (set == 7 && TicTacToeObj[x.toString() + x.toString()] == 0) {
+            return (x.toString() + x.toString());
+        } else {
+            if (set == 8 && TicTacToeObj[x.toString() + (2 - x).toString()] == 0) {
+                return (x.toString() + (2 - x).toString());
+            }
+        }
+        for (var y = 0; y < 3; y++) {
+            // check rows and columns
+            if (set == x && TicTacToeObj[x.toString() + y.toString()] == 0) {
+                return (x.toString() + y.toString());
             } else {
-                if (value = 2) {
-                    moveRow = scoreObj.hasOwnProperty(key);
+                if (set == (y + 4) && TicTacToeObj[y.toString() + x.toString()] == 0) {
+                    return (y.toString() + x.toString());
                 }
             }
         }
     }
-    if (winRow) {
-        emptyBlock = findEmptyBlock(winRow);
-        fillBox(emptyRow, compSymbol);
+}
+
+function decideMove(scoresObj) {
+    var winSet = false;    
+    var moveSet = false;   
+    for (var value in scoresObj) {
+        if (scoresObj.hasOwnProperty(value)) {
+            if (debug) { console.log("value = ", value) };
+            if (value = -2) {
+                winSet = scoreObj.hasOwnProperty(key);
+            } else {
+                if (value = 2) {
+                    moveSet = scoreObj.hasOwnProperty(key);
+                }
+            }
+        }
+    }
+    if (winSet) {
+        emptyBlock = findEmptyBlock(winSet);
+        fillBox(emptyBlock, compSymbol);
         iWin();
         return;
+    } else {
+        if (moveSet) {
+            emptyBlock = findEmptyBlock(moveSett);
+            fillBox(emptyBlock, compSymbol);
+            return;
+        }
     }
 
-/*
-    if (scoreRow == -2) {
-        fillBox(emptyRow, compSymbol);
-        iWin();
-        return;
-    }
-    if (scoreCol == -2) {
-        fillBox(emptyCol, compSymbol);
-        iWin();
-        return;
-    }
-    if (scoreRow == 2) {
-        fillBox(emptyRow, compSymbol);
-        yourTurn = true;
-        return;
-    }
-    //        scoresObj[x + 3] = scoreCol;
-    if (scoreCol == 2) {
-        fillBox(emptyCol, compSymbol);
-        yourTurn = true;
-        return;
-    }
-    scoresObj[7] = scoreDiag1;
-    if (scoreDiag1 == -2) {
-        fillBox(emptyDiag1, compSymbol);
-        iWin();
-        return;
-    }
 
-    scoresObj[8] = scoreDiag2;
-    if (scoreDiag2 == -2) {
-        fillBox(emptyDiag2, compSymbol);
-        iWin();
-        return;
-    }
-    //    scoresObj[7] = scoreDiag1;
-    if (scoreDiag1 == 2) {
-        fillBox(emptyDiag1, compSymbol);
-        yourTurn = true;
-        return;
-    }
-
-    //    scoresObj[8] = scoreDiag2;
-    if (scoreDiag2 == 2) {
-        fillBox(emptyDiag2, compSymbol);
-        yourTurn = true;
-        return;
-    }
-*/
     if (TicTacToeObj["11"] == 0)
         fillBox("11", compSymbol);
     else {
