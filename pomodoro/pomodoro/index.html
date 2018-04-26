@@ -1,0 +1,47 @@
+﻿<!-- How to use VS debubing described here
+    https://richnewman.wordpress.com/2017/04/11/debugging-javascripttypescript-using-visual-studio-2017-and-chrome/
+    https://docs.microsoft.com/en-us/windows/uwp/get-started/create-a-hello-world-app-js-uwp
+    -->
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>My Test Bench</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="JavaScript.js"></script>
+    <link rel="stylesheet" href="StyleSheet1.css" type="text/css" />
+</head>
+
+<body>
+    <main>
+        <h1 class='title'>Pomodoro Clock</h1>
+
+        <div id="clock" class="clock">
+            <h2 id="session">SESSION</h2>
+            <div id="countDown">
+                <div class="values"></div>
+            </div>
+        </div>
+        <div class="reset">
+            <button id="reset" class="reset">Reset</button>
+        </div>
+        <div class="control">
+            <div id="break">
+                <div class="title2">Break Length</div>
+                <div class="control break-length-control">
+                    <button id="neg-break-length" class="plus-neg">-</button>
+                    <div class="" id="break-length-value">5</div>
+                    <button id="plus-break-length" class="plus-neg">+</button>
+                </div>
+            </div>
+            <div id="session-length">
+                <div class="title2">Session Length</div>
+                <div class="control session-length-control">
+                    <button id="neg-session-length" class="plus-neg">-</button>
+                    <div class="" id="session-length-value">25</div>
+                    <button id="plus-session-length" class="plus-neg">+</button>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

@@ -1,0 +1,28 @@
+﻿body {
+    background-color: #fcfcfc;
+    font-family: Sans MS;
+    color: #132056;
+}
+
+.title {
+    color: #132056;
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+button {
+    height: 100px;
+    width: 100px;
+    background-color: #6cfccc;
+    color: #132056;
+    border: none;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.control {
+    display: flex;
+    justify-content: center;
+}

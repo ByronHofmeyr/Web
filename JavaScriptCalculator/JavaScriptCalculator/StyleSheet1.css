@@ -15,5 +15,23 @@
 }
 
 .frmBtn {
-    width: 50px
+    width: 50px;
+    border: none;
+}
+
+.button1 {
+    background-color: black;
+    color: white;
+    border: none;
+    text-align: right;
+}
+
+.button2 {
+    background-color: darkseagreen;
+    border: none;
+}
+
+.operator {
+    background-color: orange;
+    border: none;
 }
