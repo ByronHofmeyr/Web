@@ -14,10 +14,12 @@
 <body>
     <main>
         <h1 class='title'>Tic Tac Toe</h1>
-        <div class="bgimg" id="splash">
-            <div>Choice whether you are noughts "O" or crosses "X" to play</div>
-            <button type="button" onclick="choice(this)" id="O" class="button">O</button>
-            <button type="button" onclick="choice(this)" id="X" class="button">X</button>
+        <div id="splash">
+            <div class='title'>Choice whether you are noughts "O" or crosses "X" to play</div>
+            <div class="control">
+                <button onclick="choice(this)" id="O" class="button1">O</button>
+                <button onclick="choice(this)" id="X" class="button1">X</button>
+            </div>
         </div>
         <div id="post-splash" style="display:none">
             <div class="control">
@@ -35,7 +37,9 @@
                 <button type="button" onclick="onClick(this)" id="21" class="button"></button>
                 <button type="button" onclick="onClick(this)" id="22" class="button"></button>
             </div>
-            <button type="button" id="reset" class="button">reset</button>
+            <div class='control'>
+                <button type="button" id="reset" class="button2">reset</button>
+            </div>
         </div>
     </main>
 </body>

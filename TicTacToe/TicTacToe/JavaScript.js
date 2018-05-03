@@ -2,7 +2,7 @@
 var userSymbol = "O";
 var compSymbol = "X";
 var yourTurn = true;
-
+var turns = 0;
 
 var TicTacToeObj = {
     "00": 0, "01": 0, "02": 0,
@@ -16,8 +16,32 @@ var scoresObj = {
     6: 0, 7: 0,
 };
 
-function iWin() {
-    console.log("I Win");
+function win(set, color) {
+    console.log("I Win set = ", set);
+    turns = 10;
+    for (var x = 0; x < 3; x++) {
+        // check the diagonals here
+        if (set == 6) {
+            var property = document.getElementById(x.toString() + x.toString());
+            property.style.backgroundColor = color;
+        } else {
+            if (set == 7) {
+                var property = document.getElementById(x.toString() + (2 - x).toString());
+                property.style.backgroundColor = color;
+            }
+        }
+        for (var y = 0; y < 3; y++) {
+            // check rows and columns
+            if (set == x) {
+                var property = document.getElementById(x.toString() + y.toString());
+                property.style.backgroundColor = color;
+            }
+            if (set == (x + 3)) {
+                var property = document.getElementById(y.toString() + x.toString());
+                property.style.backgroundColor = color;
+            }
+        }
+    }
 }
 
 function findEmptyBlock(set) {
@@ -39,7 +63,7 @@ function findEmptyBlock(set) {
             if (set == x && TicTacToeObj[x.toString() + y.toString()] == 0) {
                 if (debug) { console.log("Rows"); }
                 return (x.toString() + y.toString());
-            } 
+            }
             if (set == (x + 3) && TicTacToeObj[y.toString() + x.toString()] == 0) {
                 if (debug) { console.log("columns"); }
                 if (debug) { console.log("(y + 3) = ", (y + 3)); }
@@ -54,32 +78,44 @@ function findEmptyBlock(set) {
 
 function decideMove() {
     if (debug) { console.log("decideMove Function"); }
-    var winSet = -1;    
+    var winSet = -1;
     var moveSet = -1;
-    var value
-    if (debug) { console.log("scoresObj = ", scoresObj); }
+    var value;
+    var rowOne = -1;
+    var colOne = -1;
+
     for (var key in scoresObj) {
-        value = scoresObj[key]; 
-        if (debug) { console.log("key = ", key); }
-        if (debug) { console.log("value = ", value) };
+        value = scoresObj[key];
+        // Keep track of row and column with score of 1
+        if (value == 1) {
+            //if (key < 3 && rowOne == -1) {
+            if (key < 3) {
+                rowOne = key;
+                if (debug) { console.log("rowOne = ", rowOne); }
+            } else {
+                if (key < 6) {
+                    colOne = key;
+                    if (debug) { console.log("colOne = ", colOne); }
+                }
+            }
+        }
         if (value == -2) {
             winSet = key;
             if (debug) { console.log("winSet = ", winSet); }
-            break;
         } else {
             if (value == 2) {
                 moveSet = key;
                 if (debug) { console.log("moveSet = ", moveSet); }
-                break;
             }
         }
     }
+    if (debug) { console.log("scoresObj = ", scoresObj) };
     if (winSet > -1) {
         if (debug) { console.log("winSet = ", winSet); }
         emptyBlock = findEmptyBlock(winSet);
         if (debug) { console.log("emptyBlock = ", emptyBlock); }
         fillBox(emptyBlock, compSymbol);
-        iWin();
+        win(winSet, "#f47121");
         return;
     } else {
         if (moveSet > -1) {
@@ -90,27 +126,45 @@ function decideMove() {
             return;
         }
     }
-
-    if (TicTacToeObj["11"] == 0)
+    if (TicTacToeObj["11"] == 0) {
         fillBox("11", compSymbol);
+    }
     else {
-        emptyBlock = findEmptyBlock(0);
-        if (emptyBlock) {
-            fillBox(emptyBlock, compSymbol);
+        if (TicTacToeObj["20"] == 1 && TicTacToeObj["02"] == 1 && TicTacToeObj["12"] == 0) {
+            fillBox("12", compSymbol);
         } else {
-            emptyBlock = findEmptyBlock(1);
-            if (emptyBlock) {
-                fillBox(emptyBlock, compSymbol);
-            }
-            else {
-                emptyBlock = findEmptyBlock(2);
-                if (emptyBlock) {
-                    fillBox(emptyBlock, compSymbol);
+            if (TicTacToeObj["00"] == 1 && TicTacToeObj["22"] == 1 && TicTacToeObj["10"] == 0) {
+                fillBox("10", compSymbol);
+            } else {
+
+                if (TicTacToeObj["11"] == 1 && TicTacToeObj["22"] == 1 && TicTacToeObj["20"] == 0) {
+                    fillBox("20", compSymbol);
+                } else {
+
+
+                    if (rowOne > -1 && colOne > -1 && TicTacToeObj[rowOne.toString() + (colOne - 3).toString()] == 0 && TicTacToeObj["11"] < 1) {
+                        fillBox(rowOne.toString() + (colOne - 3).toString(), compSymbol);
+                    } else {
+                        emptyBlock = findEmptyBlock(0);
+                        if (emptyBlock) {
+                            fillBox(emptyBlock, compSymbol);
+                        } else {
+                            emptyBlock = findEmptyBlock(2);
+                            if (emptyBlock) {
+                                fillBox(emptyBlock, compSymbol);
+                            }
+                            else {
+                                emptyBlock = findEmptyBlock(1);
+                                if (emptyBlock) {
+                                    fillBox(emptyBlock, compSymbol);
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
     }
-
 }
 
 function computersTurn() {
@@ -148,14 +202,29 @@ function computersTurn() {
             scoreCol += TicTacToeObj[y.toString() + x.toString()];
         }
         scoresObj[x] = scoreRow;
-        scoresObj[x+3] = scoreCol;
-
+        scoresObj[x + 3] = scoreCol;
+        if (scoreRow > 2) {
+            win(x, "#6cb548");
+            return;
+        } else {
+            if (scoreCol > 2) {
+                win(x + 3, "#6cb548");
+                return;
+            }
+        }
         scoreRow = 0;  // Initialise scoreRow before scoring next row.
         scoreCol = 0;  // Initialise scoreCol before scoring next col.
     }
 
     scoresObj[6] = scoreDiag1;
     scoresObj[7] = scoreDiag2;
+    if (scoreDiag1 > 2) {
+        win(6, "#6cb548");
+    } else {
+        if (scoreDiag2 > 2) {
+            win(7, "#6cb548");
+        }
+    }
     if (debug) { console.log("scoresObj = ", scoresObj) };
     decideMove();
     yourTurn = true;
@@ -187,7 +256,9 @@ function fillBox(button, symbol) {
 
 function clearBox(id) {
     if (debug) { console.log("button to clear = ", id); };
-    document.getElementById(id).innerText = "";
+    var property = document.getElementById(id);
+    property.innerText = "";
+    property.style.backgroundColor = "#6cfccc";
 }
 
 function clearAllBoxes() {
@@ -208,12 +279,20 @@ function clearAllBoxes() {
 function onClick(button) {
     if (debug) { console.log("onClick function") };
     var x = button.id;
-
-    if (yourTurn) {
-        fillBox(x, userSymbol);
-        yourTurn = false;
-        computersTurn();
-    } 
+    if (turns > 7) {
+        clearAllBoxes();
+        yourTurn = true;
+        turns = 0;
+    } else {
+        if (TicTacToeObj[x] == 0) {
+            if (yourTurn) {
+                fillBox(x, userSymbol);
+                yourTurn = false;
+                turns += 2;
+                computersTurn();
+            }
+        }
+    }
 }
 
 $(document).ready(function () {
@@ -222,6 +301,7 @@ $(document).ready(function () {
         if (debug) { console.log("click reset"); }
         clearAllBoxes();
         yourTurn = true;
+        turns = 0;
     });
 
 }); 

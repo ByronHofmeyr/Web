@@ -10,7 +10,7 @@
     margin-bottom: 50px;
 }
 
-button {
+.button {
     height: 100px;
     width: 100px;
     background-color: #6cfccc;
@@ -20,6 +20,31 @@ button {
     margin-right: 10px;
     margin-bottom: 10px;
     margin-top: 10px;
+}
+
+.button1 {
+    background-color: #6cfccc;
+    border: none;
+    height: 25px;
+    width: 25px;
+    color: #132056;
+    border-radius: 20%;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.button2 {
+    background-color: #6cfccc;
+    border: none;
+    height: 25px;
+    width: 50px;
+    color: #132056;
+    border-radius: 20%;
+    margin-top: 50px;
+    margin-right: 10px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
 }
 
 .control {
