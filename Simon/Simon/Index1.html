@@ -1,0 +1,19 @@
+﻿<!-- How to use VS debubing described here
+    https://richnewman.wordpress.com/2017/04/11/debugging-javascripttypescript-using-visual-studio-2017-and-chrome/
+    https://docs.microsoft.com/en-us/windows/uwp/get-started/create-a-hello-world-app-js-uwp
+    -->
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Simon</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="JavaScript.js"></script>
+    <link rel="stylesheet" href="StyleSheet1.css" type="text/css" />
+</head>
+<body onload="Simon.run(simon)">
+    <canvas id="simon" width="500" height="500"
+            style="border:1px solid #d3d3d3;">
+        Your browser does not support the HTML5 canvas tag.  How sad.
+    </canvas>
+</body>
+</html>
