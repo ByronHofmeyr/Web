@@ -8,12 +8,12 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{51AC5A59-E658-4C34-8C6C-935A9B22F9C8}</ProjectGuid>
+    <ProjectGuid>{12672382-7C77-41A9-9938-1E8D78E75D13}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>frogger</RootNamespace>
-    <AssemblyName>frogger</AssemblyName>
+    <RootNamespace>Frogger</RootNamespace>
+    <AssemblyName>Frogger</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
@@ -75,7 +75,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="app.js" />
+    <Content Include="appOLD.js" />
     <Content Include="engine.js" />
     <Content Include="index.html" />
     <Content Include="resources.js" />
@@ -98,9 +98,9 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>49770</DevelopmentServerPort>
+          <DevelopmentServerPort>52268</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:49770/</IISUrl>
+          <IISUrl>http://localhost:52268/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

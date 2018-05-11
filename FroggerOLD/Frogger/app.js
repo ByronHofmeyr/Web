@@ -1,5 +1,5 @@
 // Enemies our player must avoid
-var Enemy = function () {
+var Enemy = function() {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
 
@@ -13,11 +13,11 @@ var Enemy = function () {
 };
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
-Enemy.prototype.update = function (dt) {
+Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
-    //console.log("Enemy.prototype.update");
+    console.log("Enemy.prototype.update");
 };
 Enemy.prototype.location = function () {
     // Updates the Enemy location
@@ -30,7 +30,7 @@ Enemy.prototype.collision = function () {
 
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function () {
-    //console.log("Enemy.prototype.render");
+    console.log("Enemy.prototype.render");
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
@@ -48,7 +48,7 @@ Enemy.prototype.render = function () {
     Recall that the player cannot move off screen (so you will need to check for that and handle appropriately).
     If the player reaches the water the game should be reset by moving the player back to the initial location (you can write a separate reset Player method to handle that).
     You can add your own Player methods as needed.
- */
+ */ 
 var Player = function () {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
@@ -67,7 +67,7 @@ Player.prototype.update = function (dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
-    //console.log("Player.prototype.update");
+    console.log("Player.prototype.update");
 };
 // Updates the Enemy location
 Player.prototype.location = function () {
@@ -76,11 +76,11 @@ Player.prototype.location = function () {
 // Handles collision with the Player
 Player.prototype.collision = function () {
     console.log("Player.prototype.collision");
-
+    
 };
 // Draw the enemy on the screen, required method for game
 Player.prototype.render = function () {
-    //console.log("Player.prototype.render");
+    console.log("Player.prototype.render");
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 // Handle Input to move player
@@ -103,7 +103,7 @@ var allEnemies = [];
 var amy = new Enemy();
 allEnemies.push(amy);
 console.log("allEnemies = ", allEnemies);
-var player = new Player();
+var bob = new Player();
 
 
 // This listens for key presses and sends the keys to your
@@ -116,5 +116,5 @@ document.addEventListener('keyup', function(e) {
         40: 'down'
     };
 
-    player.handleInput(allowedKeys[e.keyCode]);
+    Player.handleInput(allowedKeys[e.keyCode]);
 });
