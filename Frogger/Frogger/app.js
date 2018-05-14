@@ -7,9 +7,10 @@ var Enemy = function () {
     // a helper we've provided to easily load images
     console.log("Enemy");
     this.sprite = 'images/enemy-bug.png';
-    this.loc = 10;
-    this.speed = 10;
-
+    this.x = -100;
+    this.y = 1;
+    this.speed = 100;
+          //ctx.drawImage(Resources.get(rowImages[row]), col * 101, row * 83);
 };
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
@@ -17,21 +18,27 @@ Enemy.prototype.update = function (dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
-    //console.log("Enemy.prototype.update");
+    if (this.x > 500) { this.x = -100; }
+    this.x += this.speed * dt;
 };
 Enemy.prototype.location = function () {
     // Updates the Enemy location
-    console.log("Enemy.prototype.location");
+    //console.log("Enemy.prototype.location");
+    return [Math.floor(this.x / 100), this.y];
+
 };
 
 Enemy.prototype.collision = function () {
     // Handles collision with the Player
+    if (this.location == player.location) {
+        /* reset at this point */
+    }
 };
 
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function () {
     //console.log("Enemy.prototype.render");
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y * 83 - 21); // was 62
 };
 
 // Now write your own player class
@@ -57,11 +64,12 @@ var Player = function () {
     // a helper we've provided to easily load images
     console.log("Player");
     this.sprite = 'images/char-boy.png';
-    this.loc = 10;
-    this.speed = 10;
+    this.x = 2;
+    this.y = 5;
+    //this.speed = 10;
 
 };
-// Update the enemy's position, required method for game
+// Update the player's position, required method for game
 // Parameter: dt, a time delta between ticks
 Player.prototype.update = function (dt) {
     // You should multiply any movement by the dt parameter
@@ -69,19 +77,17 @@ Player.prototype.update = function (dt) {
     // all computers.
     //console.log("Player.prototype.update");
 };
-// Updates the Enemy location
-Player.prototype.location = function () {
-    console.log("Player.prototype.location");
-};
-// Handles collision with the Player
+
+// Handles collision with the Enemy
 Player.prototype.collision = function () {
     console.log("Player.prototype.collision");
 
 };
-// Draw the enemy on the screen, required method for game
+// Draw the player on the screen, required method for game
 Player.prototype.render = function () {
     //console.log("Player.prototype.render");
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    //ctx.drawImage(Resources.get(rowImages[row]), col * 101, row * 83);
+    ctx.drawImage(Resources.get(this.sprite), this.x * 101, this.y * 83);
 };
 // Handle Input to move player
 Player.prototype.handleInput = function (keyCode) {
@@ -93,6 +99,20 @@ Player.prototype.handleInput = function (keyCode) {
      */
     console.log("Player.prototype.handleInput");
     console.log("keyCode = ", keyCode);
+    switch (keyCode) {
+        case 'left':
+            if (this.x > 0) { this.x--; }
+            break;
+        case 'up':
+            if (this.y > 0) { this.y--; }
+            break;
+        case 'right':
+            if (this.x < 4) { this.x++; }
+            break;
+        case 'down':
+            if (this.y < 5) { this.y++; }
+            break;
+    }
 };
 
 // Now instantiate your objects.
@@ -101,8 +121,18 @@ Player.prototype.handleInput = function (keyCode) {
 console.log("instantiate your objects");
 var allEnemies = [];
 var amy = new Enemy();
+amy.y = 1;
+amy.speed = 100;
 allEnemies.push(amy);
-console.log("allEnemies = ", allEnemies);
+var bob = new Enemy();
+bob.y = 2;
+bob.speed = 200;
+allEnemies.push(bob);
+var cam = new Enemy();
+cam.y = 3;
+cam.speed = 400;
+allEnemies.push(cam);
+//console.log("allEnemies = ", allEnemies);
 var player = new Player();
 
 
