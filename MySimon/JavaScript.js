@@ -16,12 +16,15 @@ var Simon = (function () {
      * This engine makes the canvas' context (ctx) object globally available to make 
      * writing app.js a little simpler to work with.
      */
-
     var Engine = (function (global) {
         /* Predefine the variables we'll be using within this scope,
          * create the canvas element, grab the 2D context for that canvas
          * set the canvas elements height/width and add it to the DOM.
          */
+        var states = [false, false, false, false];
+        var litcolors = ['red', 'yellow', 'lightblue', 'lightgreen'];
+        var colors = ['darkred', 'darkorange', 'darkblue', 'darkgreen'];
+
         var doc = global.document,
             win = global.window,
             canvas = doc.createElement('canvas'),
@@ -59,7 +62,7 @@ var Simon = (function () {
             /* Use the browser's requestAnimationFrame function to call this
              * function again as soon as the browser is able to draw another frame.
              */
-            win.requestAnimationFrame(main);
+            //win.requestAnimationFrame(main);
         }
 
         /* This function does some initial setup that should only occur once,
@@ -67,6 +70,7 @@ var Simon = (function () {
          * game loop.
          */
         function init() {
+            console.log("init function called");
             reset();
             lastTime = Date.now();
             main();
@@ -87,10 +91,7 @@ var Simon = (function () {
          * render methods.
          */
         function updateEntities(dt) {
-            allEnemies.forEach(function (enemy) {
-                enemy.update(dt);
-            });
-            player.update();
+            /* ...*/
         }
 
         /* This function initially draws the "game level", it will then call
@@ -100,21 +101,10 @@ var Simon = (function () {
          * they are just drawing the entire screen over and over.
          */
         function render() {
-            /* This array holds the relative URL to the image used
-             * for that particular row of the game level.
+            /* 
              */
-            var rowImages = [
-                'images/water-block.png',   // Top row is water
-                'images/stone-block.png',   // Row 1 of 3 of stone
-                'images/stone-block.png',   // Row 2 of 3 of stone
-                'images/stone-block.png',   // Row 3 of 3 of stone
-                'images/grass-block.png',   // Row 1 of 2 of grass
-                'images/grass-block.png'    // Row 2 of 2 of grass
-            ],
-                numRows = 6,
-                numCols = 5,
-                row, col;
-
+            console.log("render function");
+            litquadrant = -1;
             // Before drawing, clear existing canvas
             ctx.clearRect(0, 0, canvas.width, canvas.height)
 
@@ -122,35 +112,68 @@ var Simon = (function () {
              * and, using the rowImages array, draw the correct image for that
              * portion of the "grid"
              */
-            for (row = 0; row < numRows; row++) {
-                for (col = 0; col < numCols; col++) {
-                    /* The drawImage function of the canvas' context element
-                     * requires 3 parameters: the image to draw, the x coordinate
-                     * to start drawing and the y coordinate to start drawing.
-                     * We're using our Resources helpers to refer to our images
-                     * so that we get the benefits of caching these images, since
-                     * we're using them over and over.
-                     */
-                    ctx.drawImage(Resources.get(rowImages[row]), col * 101, row * 83);
-                }
+            c = canvas;
+            //writeMessage(ctx, 10, 25, "" + score);
+            writeMessage(c, 180, 220, "Simon");
+            writeMessage3(c, 190, 280, "02");
+            writeMessage2(c, 184, 300, "COUNT");
+            writeMessage2(c, 238, 300, "START");
+            writeMessage2(c, 285, 300, "STRICT");
+            writeMessage2(c, 224, 330, "OFF");
+            writeMessage2(c, 268, 330, "ON");
+
+
+            outerRadius = c.width * 0.45;
+            innerRadius = c.width * 0.20;
+            ctx.translate(c.width / 2, c.height / 2);
+            var i;
+            for (i = 0; i < 4; i++) {
+                states[i] = (litquadrant == i);
+                slice(i);
             }
-
-            renderEntities();
+            //ctx.translate(-c.width / 2, -c.height / 2);
         }
+        var slice = function (quadrant) {
+            ctx.rotate(quadrant * Math.PI / 2);
+            ctx.beginPath();
+            ctx.arc(-5, -5, innerRadius, Math.PI, 3 * Math.PI / 2);
+            //ctx.lineTo(-5, -outerRadius - 5);
+            ctx.arc(-5, -5, outerRadius, 3 * Math.PI / 2, Math.PI, true);
+            //ctx.closePath();
+            if (states[quadrant]) {
+                ctx.fillStyle = litcolors[quadrant];
+            } else {
+                ctx.fillStyle = colors[quadrant];
+            }
+            ctx.fill();
+            ctx.strokeStyle = '#2a303a';
+            ctx.lineWidth = 20;
+            ctx.stroke();
+            //ctx.rotate(-quadrant * Math.PI / 2);
 
-        /* This function is called by the render function and is called on each game
-         * tick. Its purpose is to then call the render functions you have defined
-         * on your enemy and player entities within app.js
-         */
-        function renderEntities() {
-            /* Loop through all of the objects within the allEnemies array and call
-             * the render function you have defined.
-             */
-            allEnemies.forEach(function (enemy) {
-                enemy.render();
-            });
 
-            player.render();
+            //renderEntities();
+        }
+        var writeMessage = function (canvas, x, y, message) {
+            var context = canvas.getContext('2d');
+            context.clearRect(x, y - 30, canvas.width, 200);
+            context.font = '42pt Pacifico';
+            context.fillStyle = 'black';
+            context.fillText(message, x, y);
+        }
+        var writeMessage2 = function (canvas, x, y, message) {
+            var context = canvas.getContext('2d');
+            context.clearRect(x, y - 10, canvas.width, 200);
+            context.font = '8pt Calibri';
+            context.fillStyle = 'black';
+            context.fillText(message, x, y);
+        }
+        var writeMessage3 = function (canvas, x, y, message) {
+            var context = canvas.getContext('2d');
+            context.clearRect(x, y - 10, canvas.width, 200);
+            context.font = '14pt Calibri';
+            context.fillStyle = 'red';
+            context.fillText(message, x, y);
         }
 
         /* This function does nothing but it could have been a good place to
@@ -161,24 +184,9 @@ var Simon = (function () {
             // noop
         }
 
-        /* Go ahead and load all of the images we know we're going to need to
-         * draw our game level. Then set init as the callback method, so that when
-         * all of these images are properly loaded our game will start.
-         */
-        Resources.load([
-            'images/stone-block.png',
-            'images/water-block.png',
-            'images/grass-block.png',
-            'images/enemy-bug.png',
-            'images/char-boy.png'
-        ]);
-        Resources.onReady(init);
-
-        /* Assign the canvas' context object to the global variable (the window
-         * object when run in a browser) so that developers can use it more easily
-         * from within their app.js files.
-         */
-        global.ctx = ctx;
+        // Call init() to instantiate the game
+        init();
+        //global.ctx = ctx;
     })(this);
 
 
@@ -186,10 +194,10 @@ var Simon = (function () {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     // This is the starting point and is called from HTML onload
-    simon.run = function (canvas) {
-        console.log("Simon.run function call");
+    //simon.run = function (canvas) {
+    //    console.log("Simon.run function call");
 
-    }
+    //}
 
 
 })(); // End of Simon class
