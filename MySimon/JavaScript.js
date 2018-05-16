@@ -108,20 +108,17 @@ var Simon = (function () {
             // Before drawing, clear existing canvas
             ctx.clearRect(0, 0, canvas.width, canvas.height)
 
-            /* Loop through the number of rows and columns we've defined above
-             * and, using the rowImages array, draw the correct image for that
-             * portion of the "grid"
-             */
-            c = canvas;
+
+            //c = canvas;
             //writeMessage(ctx, 10, 25, "" + score);
-            writeMessage(c, 176, 234, "Simon");
-            writeMessage3(c, 190, 282, "02");
-            writeMessage2(c, 184, 300, "COUNT");
-            writeMessage2(c, 239, 300, "START");
-            writeMessage2(c, 285, 300, "STRICT");
-            writeMessage2(c, 214, 330, "OFF");
-            writeMessage2(c, 278, 330, "ON");
-            
+            writeMessage(ctx, 176, 234, "Simon");
+            writeMessage3(ctx, 190, 282, "02");
+            writeMessage2(ctx, 184, 300, "COUNT");
+            writeMessage2(ctx, 239, 300, "START");
+            writeMessage2(ctx, 285, 300, "STRICT");
+            writeMessage2(ctx, 214, 330, "OFF");
+            writeMessage2(ctx, 278, 330, "ON");
+
 
             //Draw a circle red
             ctx.beginPath();
@@ -158,12 +155,12 @@ var Simon = (function () {
             //Draw recangle
             ctx.beginPath();
             ctx.fillStyle = 'lightblue';
-            ctx.fillRect(255, 321, 18, 12);            
+            ctx.fillRect(255, 321, 18, 12);
 
-            outerRadius = c.width * 0.45;
-            innerRadius = c.width * 0.20;
+            outerRadius = canvas.width * 0.45;
+            innerRadius = canvas.width * 0.20;
 
-            ctx.translate(c.width / 2, c.height / 2);
+            ctx.translate(canvas.width / 2, canvas.height / 2); 
             var i;
             for (i = 0; i < 4; i++) {
                 states[i] = (litquadrant == i);
@@ -192,23 +189,23 @@ var Simon = (function () {
 
             //renderEntities();
         }
-        var writeMessage = function (canvas, x, y, message) {
-            var context = canvas.getContext('2d');
+        var writeMessage = function (context, x, y, message) {
+            //var context = canvas.getContext('2d');
             context.clearRect(x, y - 10, canvas.width, 10);
             context.font = '42pt Pacifico';
             context.fillStyle = 'black';
             context.fillText(message, x, y);
         }
-        var writeMessage2 = function (canvas, x, y, message) {
-            var context = canvas.getContext('2d');
+        var writeMessage2 = function (context, x, y, message) {
+            //var context = canvas.getContext('2d');
             context.clearRect(x, y - 10, canvas.width, 10);
             context.font = '8pt Calibri';
             context.fillStyle = 'black';
             context.fillText(message, x, y);
         }
-        var writeMessage3 = function (canvas, x, y, message) {
-            var context = canvas.getContext('2d');
-            context.fillRect(x -5, y - 20, 30, 30);
+        var writeMessage3 = function (context, x, y, message) {
+            //var context = canvas.getContext('2d');
+            context.fillRect(x - 5, y - 20, 30, 30);
             context.font = '15pt Calibri';
             context.fillStyle = 'red';
             context.fillText(message, x, y);
