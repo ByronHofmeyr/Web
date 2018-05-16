@@ -114,17 +114,55 @@ var Simon = (function () {
              */
             c = canvas;
             //writeMessage(ctx, 10, 25, "" + score);
-            writeMessage(c, 180, 220, "Simon");
-            writeMessage3(c, 190, 280, "02");
+            writeMessage(c, 176, 234, "Simon");
+            writeMessage3(c, 190, 282, "02");
             writeMessage2(c, 184, 300, "COUNT");
-            writeMessage2(c, 238, 300, "START");
+            writeMessage2(c, 239, 300, "START");
             writeMessage2(c, 285, 300, "STRICT");
-            writeMessage2(c, 224, 330, "OFF");
-            writeMessage2(c, 268, 330, "ON");
+            writeMessage2(c, 214, 330, "OFF");
+            writeMessage2(c, 278, 330, "ON");
+            
 
+            //Draw a circle red
+            ctx.beginPath();
+            ctx.arc(252, 275, 8, 0, 2 * Math.PI);
+            ctx.fillStyle = "red";
+            ctx.fill();
+            ctx.strokeStyle = '#2a303a';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            //Draw a circle yellow
+            ctx.beginPath();
+            ctx.arc(298, 275, 8, 0, 2 * Math.PI);
+            ctx.fillStyle = "yellow";
+            ctx.fill();
+            ctx.strokeStyle = '#2a303a';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            //Draw a circle small red
+            ctx.beginPath();
+            ctx.arc(298, 258, 3, 0, 2 * Math.PI);
+            ctx.fillStyle = "red";
+            ctx.fill();
+            ctx.strokeStyle = '#2a303a';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            //Draw recangle
+            ctx.beginPath();
+            ctx.fillStyle = '#2a303a';
+            ctx.fillRect(235, 320, 40, 14);
+
+            //Draw recangle
+            ctx.beginPath();
+            ctx.fillStyle = 'lightblue';
+            ctx.fillRect(255, 321, 18, 12);            
 
             outerRadius = c.width * 0.45;
             innerRadius = c.width * 0.20;
+
             ctx.translate(c.width / 2, c.height / 2);
             var i;
             for (i = 0; i < 4; i++) {
@@ -156,22 +194,22 @@ var Simon = (function () {
         }
         var writeMessage = function (canvas, x, y, message) {
             var context = canvas.getContext('2d');
-            context.clearRect(x, y - 30, canvas.width, 200);
+            context.clearRect(x, y - 10, canvas.width, 10);
             context.font = '42pt Pacifico';
             context.fillStyle = 'black';
             context.fillText(message, x, y);
         }
         var writeMessage2 = function (canvas, x, y, message) {
             var context = canvas.getContext('2d');
-            context.clearRect(x, y - 10, canvas.width, 200);
+            context.clearRect(x, y - 10, canvas.width, 10);
             context.font = '8pt Calibri';
             context.fillStyle = 'black';
             context.fillText(message, x, y);
         }
         var writeMessage3 = function (canvas, x, y, message) {
             var context = canvas.getContext('2d');
-            context.clearRect(x, y - 10, canvas.width, 200);
-            context.font = '14pt Calibri';
+            context.fillRect(x -5, y - 20, 30, 30);
+            context.font = '15pt Calibri';
             context.fillStyle = 'red';
             context.fillText(message, x, y);
         }
