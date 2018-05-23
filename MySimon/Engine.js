@@ -68,9 +68,6 @@ var Engine = (function (global) {
 
         //win.requestAnimationFrame(main);
         //}, 1000); // How long do you want the delay to be (in milliseconds)?
-
-
-
     }
 
     /* This function does some initial setup that should only occur once,
@@ -243,6 +240,7 @@ var Engine = (function (global) {
     // Call init() to instantiate the game
     init();
     //global.ctx = ctx;
+    global.canvas = canvas;
 })(this);
 
 

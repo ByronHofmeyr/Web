@@ -80,47 +80,69 @@ amy.y = 1;
 amy.speed = 100;
     
 
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    // This is the starting point and is called from HTML onload
-    //simon.run = function (canvas) {
-    //    console.log("Simon.run function call");
+// This is the starting point and is called from HTML onload
+//simon.run = function (canvas) {
+//    console.log("Simon.run function call");
 
-    //}
+//}
 
-    // handle mousemove events
+// handle mousemove events
 
-    function handleMouseMove(e) {
-        console.log("handleMouseMove function call");
-        // get mouse position
-        mouseX = parseInt(e.clientX - offsetX);
-        mouseY = parseInt(e.clientY - offsetY);
+function handleMouseMove(e) {
+    console.log("handleMouseMove function call");
+    // get mouse position
 
-        // reset the results box to invisible
-        context.clearRect(225, 30, 20, 20);
+    mouseX = parseInt(e.clientX - offsetX);
+    mouseY = parseInt(e.clientY - offsetY);
 
-        // hit-test each arc
-        for (var i = 0; i < arcs.length; i++) {
+    //mouseX = parseInt(e.clientX);
+    //mouseY = parseInt(e.clientY);
+    console.log("mouseX :", mouseX, " mouseY :", mouseY);
+    /*
+    // reset the results box to invisible
+    context.clearRect(225, 30, 20, 20);
 
-            // define one arc
-            defineArc(arcs[i]);
+    // hit-test each arc
+    for (var i = 0; i < arcs.length; i++) {
 
-            // test that one arc
-            // if "hit" fill the results box with that arc's color
-            if (context.isPointInStroke(mouseX, mouseY)) {
-                context.fillStyle = arcs[i].color;
-                context.fillRect(225, 30, 20, 20);
-                return;
-            }
+        // define one arc
+        defineArc(arcs[i]);
 
+        // test that one arc
+        // if "hit" fill the results box with that arc's color
+        if (context.isPointInStroke(mouseX, mouseY)) {
+            context.fillStyle = arcs[i].color;
+            context.fillRect(225, 30, 20, 20);
+            return;
         }
-
+  
     }
+    */
+}
 
-    console.log("instantiate your objects");
-    // This listens for mouse movements and sends the cordinates to
-    // Player.handleInput() method. 
-    $("#canvas").mousemove(function (e) { handleMouseMove(e); });
+function getMousePos(canvas, evt) {
+    var rect = canvas.getBoundingClientRect();
+/*    return {
+        x: (evt.clientX - rect.left) / (rect.right - rect.left) * canvas.width,
+        y: (evt.clientY - rect.top) / (rect.bottom - rect.top) * canvas.height
+    };
+*/
+    x = (evt.clientX - rect.left) / (rect.right - rect.left) * canvas.width;
+    y = (evt.clientY - rect.top) / (rect.bottom - rect.top) * canvas.height;
+    console.log("mouseX :",x, " mouseY :", y);
+}
+
+console.log("instantiate your objects");
+// This listens for mouse movements and sends the cordinates to
+// Player.handleInput() method. 
+//$("#canvas").mousemove(function (e) { handleMouseMove(e); });
+//document.addEventListener("mousemove", mouseMoveHandler, false);
+//var canvasOffset = canvas.offset;
+//var offsetX = canvasOffset.left;
+//var offsetY = canvasOffset.top;
+document.addEventListener("mousemove", (function (e) { getMousePos(canvas, e); }), false);
         //player.handleInput(allowedKeys[e.keyCode]);
     //});
 
