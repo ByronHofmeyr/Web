@@ -12,6 +12,7 @@
     If the player reaches the water the game should be reset by moving the player back to the initial location (you can write a separate reset Player method to handle that).
     You can add your own Player methods as needed.
  */
+
 var Player = function () {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
@@ -83,44 +84,21 @@ amy.speed = 100;
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // This is the starting point and is called from HTML onload
-//simon.run = function (canvas) {
-//    console.log("Simon.run function call");
 
-//}
 
-// handle mousemove events
+function computerTurn() {
+    // Add 1 to score
+    score++;
+    // play playedArray
+    // randomly select a colour
+    // Light colour and play sound
+    // Add play to playedArray
+    // Return playedArray
 
-function handleMouseMove(e) {
-    console.log("handleMouseMove function call");
-    // get mouse position
-
-    mouseX = parseInt(e.clientX - offsetX);
-    mouseY = parseInt(e.clientY - offsetY);
-
-    //mouseX = parseInt(e.clientX);
-    //mouseY = parseInt(e.clientY);
-    console.log("mouseX :", mouseX, " mouseY :", mouseY);
-    /*
-    // reset the results box to invisible
-    context.clearRect(225, 30, 20, 20);
-
-    // hit-test each arc
-    for (var i = 0; i < arcs.length; i++) {
-
-        // define one arc
-        defineArc(arcs[i]);
-
-        // test that one arc
-        // if "hit" fill the results box with that arc's color
-        if (context.isPointInStroke(mouseX, mouseY)) {
-            context.fillStyle = arcs[i].color;
-            context.fillRect(225, 30, 20, 20);
-            return;
-        }
-  
-    }
-    */
+    console.log("computerTurn");
+    //
 }
+
 
 function getMousePos(canvas, evt) {
     var rect = canvas.getBoundingClientRect();
@@ -134,15 +112,56 @@ function getMousePos(canvas, evt) {
     console.log("mouseX :",x, " mouseY :", y);
 }
 
+function actionMouseUp(canvas, evt) {
+    var rect = canvas.getBoundingClientRect();
+    /*    return {
+            x: (evt.clientX - rect.left) / (rect.right - rect.left) * canvas.width,
+            y: (evt.clientY - rect.top) / (rect.bottom - rect.top) * canvas.height
+        };
+    */
+    x = (evt.clientX - rect.left) / (rect.right - rect.left) * canvas.width;
+    y = (evt.clientY - rect.top) / (rect.bottom - rect.top) * canvas.height;
+    ctx.fillRect(235, 320, 40, 14);
+    if ((x > 235 && x < 275) && (y > 329 && y < 343)) {
+        // switch game on or off
+        if (gameOn) {
+            gameOn = false;
+            strictOn = false;
+            score = 0;
+
+        } else {
+            gameOn = true;
+        }
+        console.log("gameOn = ", gameOn);
+        
+    }
+    if ((x > 290 && x < 306) && (y > 279 && y < 295)) {
+        // switch strict on or off
+        if (gameOn) {
+            if (strictOn) {
+                strictOn = false;
+            } else {
+                strictOn = true;
+            }
+        }
+        console.log("strictOn = ", strictOn);
+
+    }
+    if ((x > 243 && x < 260) && (y > 279 && y < 294)) {
+        // Start game
+        if (gameOn) {
+            console.log("Start ");
+            computerTurn();
+        }
+    }
+}
+
+
 console.log("instantiate your objects");
 // This listens for mouse movements and sends the cordinates to
-// Player.handleInput() method. 
-//$("#canvas").mousemove(function (e) { handleMouseMove(e); });
-//document.addEventListener("mousemove", mouseMoveHandler, false);
-//var canvasOffset = canvas.offset;
-//var offsetX = canvasOffset.left;
-//var offsetY = canvasOffset.top;
-document.addEventListener("mousemove", (function (e) { getMousePos(canvas, e); }), false);
+
+//document.addEventListener("mousemove", (function (e) { getMousePos(canvas, e); }), false);
+document.addEventListener("mouseup", (function (e) { actionMouseUp(canvas, e); }), false);
         //player.handleInput(allowedKeys[e.keyCode]);
     //});
 

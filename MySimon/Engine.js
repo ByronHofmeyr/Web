@@ -12,15 +12,20 @@
  *
  * This engine makes the canvas' context (ctx) object globally available to make 
  * writing app.js a little simpler to work with.
+ *
  */
+var gameOn = false;
+var score = 0;
+var strictOn = false;
+
 var Engine = (function (global) {
     /* Predefine the variables we'll be using within this scope,
      * create the canvas element, grab the 2D context for that canvas
      * set the canvas elements height/width and add it to the DOM.
      */
-    var score = 0;
-    var gameOn = false;
-    var strictOn = false;
+    
+    //var gameOn = false;
+    
     var states = [false, false, false, false];
     var litcolors = ['red', 'yellow', 'lightblue', 'lightgreen'];
     var colors = ['darkred', 'darkorange', 'darkblue', 'darkgreen'];
@@ -62,11 +67,10 @@ var Engine = (function (global) {
         */
 
         //setTimeout(function () {
-        score++
         update(dt);
         render();
 
-        //win.requestAnimationFrame(main);
+        win.requestAnimationFrame(main);
         //}, 1000); // How long do you want the delay to be (in milliseconds)?
     }
 
@@ -234,13 +238,15 @@ var Engine = (function (global) {
      * those sorts of things. It's only called once by the init() method.
      */
     function reset() {
+        console.log("reset function called");
         // noop
     }
 
     // Call init() to instantiate the game
     init();
-    //global.ctx = ctx;
+    global.ctx = ctx;
     global.canvas = canvas;
+
 })(this);
 
 

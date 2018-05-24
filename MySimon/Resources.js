@@ -70,4 +70,64 @@
             img.src = url;
         }
     }
+
+
+
+    var circles = [];
+    circles[circles.length] = Circle({ x: 369, y: 116, label: "A" });
+    circles[circles.length] = Circle({ x: 231, y: 278, label: "1" });
+    circles[circles.length] = Circle({ x: 133, y: 396, label: "D" });
+    circles[circles.length] = Circle({ x: 234, y: 511, label: "C" });
+    circles[circles.length] = Circle({ x: 351, y: 232, label: "B" });
+    circles[circles.length] = Circle({ x: 348, y: 388, label: "4" });
+    circles[circles.length] = Circle({ x: 164, y: 199, label: "5" });
+    circles[circles.length] = Circle({ x: 522, y: 425, label: "3" });
+    circles[circles.length] = Circle({ x: 229, y: 120, label: "E" });
+    circles[circles.length] = Circle({ x: 493, y: 237, label: "2" });
+    //
+    //var canvas = document.getElementById('myCanvas');
+    var context = ctx;
+    //
+    //circles.forEach(function (circle) { circle.draw(); });
+    // --------------------
+    function Circle(I) {
+    I.radius = 30;
+        I.draw = function () {
+            context.beginPath();
+            context.arc(I.x, I.y, I.radius, 0, 2 * Math.PI, false);
+            context.fillStyle = 'white';
+            context.fill();
+            context.lineWidth = 2;
+            context.strokeStyle = '#003300';
+            context.stroke();
+            context.font = '15pt Calibri';
+            context.fillStyle = 'black';
+            context.textAlign = 'center';
+            context.fillText(I.label, I.x, I.y);
+        };
+        return I;
+    }
+    // ----------
+    function clickIt(evt) {
+        var i, xPos, yPos, saveLabel = "", xDiff, yDiff, dist, result, cX, cY;
+        evt = evt || event;
+        xPos = evt.offsetX || evt.pageX;
+        yPos = evt.offsetY || evt.pageY;
+        // check posn against centres         
+        for (i = 0; i < circles.length; i++) {
+            cX = circles[i].x; cY = circles[i].y;
+            xDiff = Math.abs(cX - xPos);
+            yDiff = Math.abs(cY - yPos);
+            dist = Math.sqrt(Math.pow(xDiff, 2) + Math.pow(yDiff, 2));
+            if (dist <= 30) { saveLabel = circles[i].label; }
+        }
+        result = (saveLabel.length > 0) ? "You hit circle " + saveLabel + "" : "Try to click on a circle";
+        document.getElementById("msg").innerHTML = result;
+    }
+// ---------
+
+
+
+
+
 })();
