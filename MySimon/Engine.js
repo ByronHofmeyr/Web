@@ -17,6 +17,7 @@
 var gameOn = false;
 var score = 0;
 var strictOn = false;
+var states = [false, false, false, false];
 
 var Engine = (function (global) {
     /* Predefine the variables we'll be using within this scope,
@@ -26,7 +27,7 @@ var Engine = (function (global) {
     
     //var gameOn = false;
     
-    var states = [false, false, false, false];
+
     var litcolors = ['red', 'yellow', 'lightblue', 'lightgreen'];
     var colors = ['darkred', 'darkorange', 'darkblue', 'darkgreen'];
 
@@ -104,6 +105,7 @@ var Engine = (function (global) {
         /* ...*/
         //console.log("updateEntities(dt) function called");
         //writeMessage3(ctx, 190, 282, "04");
+        //player.update();
     }
 
     /* This function initially draws the "game level", it will then call
@@ -159,7 +161,7 @@ var Engine = (function (global) {
         ctx.translate(canvas.width / 2, canvas.height / 2);
         var i;
         for (i = 0; i < 4; i++) {
-            states[i] = (litquadrant == i);
+            //states[i] = (litquadrant == i);
             slice(i);
         }
         ctx.translate(canvas.width / 2, canvas.height / 2);
@@ -172,8 +174,10 @@ var Engine = (function (global) {
         //ctx.lineTo(-5, -outerRadius - 5);
         ctx.arc(-5, -5, outerRadius, 3 * Math.PI / 2, Math.PI, true);
         //ctx.closePath();
+        //console.log("states in Engine slice = ", states);
         if (states[quadrant]) {
             ctx.fillStyle = litcolors[quadrant];
+            //console.log("litcolors[quadrant] called");
         } else {
             ctx.fillStyle = colors[quadrant];
         }

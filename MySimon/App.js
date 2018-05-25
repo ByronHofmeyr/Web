@@ -84,14 +84,24 @@ amy.speed = 100;
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // This is the starting point and is called from HTML onload
-
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
 function computerTurn() {
     // Add 1 to score
     score++;
     // play playedArray
     // randomly select a colour
+    var randomInt = getRandomInt(0, 3);
+    console.log("randomInt = ", randomInt);
     // Light colour and play sound
+    states[randomInt] = true;
+    console.log("states = ", states);
+    setTimeout(function () {
+        states[randomInt] = false;
+    }, 1000); // How long do you want the delay to be (in milliseconds)?
+
     // Add play to playedArray
     // Return playedArray
 
