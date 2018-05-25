@@ -18,6 +18,7 @@ var gameOn = false;
 var score = 0;
 var strictOn = false;
 var states = [false, false, false, false];
+var computerSequence = [0, 1, 2, 3, 2, 1, 0, 0, 0, 0];
 
 var Engine = (function (global) {
     /* Predefine the variables we'll be using within this scope,

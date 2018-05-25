@@ -88,21 +88,42 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+
+function lightQuadrent(counter) {
+    if (counter < computerSequence.length) {
+        setTimeout(function () {
+            states[computerSequence[counter]] = true;
+            console.log("states[computerSequence[counter]]: ", states);
+            setTimeout(function () {
+                console.log("The index of this number is: " + counter);
+                states[computerSequence[counter]] = false;
+                console.log("states: ", states);
+                counter++;
+                lightQuadrent(counter);
+            }, 1000);
+        }, 300);
+    }
+}
+
 function computerTurn() {
     // Add 1 to score
     score++;
     // play playedArray
+    lightQuadrent(0);
     // randomly select a colour
     var randomInt = getRandomInt(0, 3);
     console.log("randomInt = ", randomInt);
     // Light colour and play sound
-    states[randomInt] = true;
-    console.log("states = ", states);
+    ////////////////////////////////////////////////////////states[randomInt] = true;
+    //console.log("states = ", states);
     setTimeout(function () {
-        states[randomInt] = false;
+        //states[randomInt] = false;
+        //computerSequence.push(randomInt);
+        console.log("computerSequence = ", computerSequence);
     }, 1000); // How long do you want the delay to be (in milliseconds)?
 
     // Add play to playedArray
+
     // Return playedArray
 
     console.log("computerTurn");
@@ -138,6 +159,7 @@ function actionMouseUp(canvas, evt) {
             gameOn = false;
             strictOn = false;
             score = 0;
+            states = [false, false, false, false];
 
         } else {
             gameOn = true;
