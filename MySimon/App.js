@@ -88,8 +88,20 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+function addQuadrant() {
+    var randomInt = getRandomInt(0, 3);
+    console.log("randomInt = ", randomInt);
+    // Light colour and play sound
+    states[randomInt] = true;
+    //console.log("states = ", states);
+    setTimeout(function () {
+        states[randomInt] = false;
+        computerSequence.push(randomInt);
+        console.log("computerSequence = ", computerSequence);
+    }, 1000); // How long do you want the delay to be (in milliseconds)?
+}
 
-function lightQuadrent(counter) {
+function playComputerSequence(counter) {
     if (counter < computerSequence.length) {
         setTimeout(function () {
             states[computerSequence[counter]] = true;
@@ -99,8 +111,12 @@ function lightQuadrent(counter) {
                 states[computerSequence[counter]] = false;
                 console.log("states: ", states);
                 counter++;
-                lightQuadrent(counter);
+                playComputerSequence(counter);
             }, 1000);
+        }, 300);
+    } else {
+        setTimeout(function () {
+            addQuadrant();
         }, 300);
     }
 }
@@ -108,25 +124,9 @@ function lightQuadrent(counter) {
 function computerTurn() {
     // Add 1 to score
     score++;
-    // play playedArray
-    lightQuadrent(0);
-    // randomly select a colour
-    var randomInt = getRandomInt(0, 3);
-    console.log("randomInt = ", randomInt);
-    // Light colour and play sound
-    ////////////////////////////////////////////////////////states[randomInt] = true;
-    //console.log("states = ", states);
-    setTimeout(function () {
-        //states[randomInt] = false;
-        //computerSequence.push(randomInt);
-        console.log("computerSequence = ", computerSequence);
-    }, 1000); // How long do you want the delay to be (in milliseconds)?
-
-    // Add play to playedArray
-
-    // Return playedArray
-
-    console.log("computerTurn");
+    // play playedArray then add random quadrant
+    playComputerSequence(0);
+    //console.log("computerTurn");
     //
 }
 
@@ -160,6 +160,7 @@ function actionMouseUp(canvas, evt) {
             strictOn = false;
             score = 0;
             states = [false, false, false, false];
+            computerSequence = [];
 
         } else {
             gameOn = true;
