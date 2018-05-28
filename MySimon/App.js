@@ -83,6 +83,8 @@ amy.speed = 100;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+
+
 // This is the starting point and is called from HTML onload
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -98,6 +100,8 @@ function addQuadrant() {
         states[randomInt] = false;
         computerSequence.push(randomInt);
         console.log("computerSequence = ", computerSequence);
+        playerTurn = true;
+        //return true;
     }, 1000); // How long do you want the delay to be (in milliseconds)?
 }
 
@@ -116,9 +120,11 @@ function playComputerSequence(counter) {
         }, 300);
     } else {
         setTimeout(function () {
+            //return true;
             addQuadrant();
         }, 300);
     }
+    //return true;
 }
 
 function computerTurn() {
@@ -126,30 +132,42 @@ function computerTurn() {
     score++;
     // play playedArray then add random quadrant
     playComputerSequence(0);
+    //const addQuad = await addQuadrant();
     //console.log("computerTurn");
     //
 }
 
-
+/*
 function getMousePos(canvas, evt) {
     var rect = canvas.getBoundingClientRect();
-/*    return {
-        x: (evt.clientX - rect.left) / (rect.right - rect.left) * canvas.width,
-        y: (evt.clientY - rect.top) / (rect.bottom - rect.top) * canvas.height
-    };
-*/
     x = (evt.clientX - rect.left) / (rect.right - rect.left) * canvas.width;
     y = (evt.clientY - rect.top) / (rect.bottom - rect.top) * canvas.height;
     console.log("mouseX :",x, " mouseY :", y);
 }
+*/
+
+function hasSameColor(color, quadrant) {
+    //console.log("color = ", color);
+    //console.log("quadrant = ", quadrant);
+    return quadrant === color;
+}
+
+function compareSequence(playerSequence, computerSequence) {
+    // compare the computer sequence to the player sequence
+    console.log("playerSequence = ", playerSequence);
+    console.log("computerSequence = ", computerSequence);
+    return (playerSequence === computerSequence); 
+ /*       console.log("compareSequence true ");
+        return true;
+    } else {
+        console.log("compareSequence  false");
+        return false;
+    }
+*/
+}
 
 function actionMouseUp(canvas, evt) {
     var rect = canvas.getBoundingClientRect();
-    /*    return {
-            x: (evt.clientX - rect.left) / (rect.right - rect.left) * canvas.width,
-            y: (evt.clientY - rect.top) / (rect.bottom - rect.top) * canvas.height
-        };
-    */
     x = (evt.clientX - rect.left) / (rect.right - rect.left) * canvas.width;
     y = (evt.clientY - rect.top) / (rect.bottom - rect.top) * canvas.height;
     ctx.fillRect(235, 320, 40, 14);
@@ -186,6 +204,50 @@ function actionMouseUp(canvas, evt) {
             console.log("Start ");
             computerTurn();
         }
+    }
+    //Check for a quadrand pressed
+    if (gameOn && playerTurn) {
+        //console.log("Waiting for quadrant press ");
+        // Check the color to find the quadrent you are in.
+        // get pixel under cursor
+        const pixel = ctx.getImageData(x, y, 1, 1).data;
+        
+        // create rgb color for that pixel
+        const color = `rgb(${pixel[0]},${pixel[1]},${pixel[2]})`;
+        //console.log("color ", color);
+        // find a quadrent with the same colour
+        var i;
+        for (i = 0; i < 4; i++) {
+            if (hasSameColor(color, colors[i])) {
+                var selected = i;
+                console.log('click on quadrant = ', selected);
+                // Light colour and play sound
+                states[selected] = true;
+                playerTurn = false;
+                //console.log("states = ", states);
+                setTimeout(function () {
+                    states[selected] = false;
+                    playerSequence.push(selected);
+                    if (!compareSequence(selected, computerSequence.slice(playerSequence.length - 1, playerSequence.length)[0])) {
+                        alert("Invalid sequence, try again");
+                        playerSequence = [];
+                        playerTurn = true;
+                    } else {
+                        if (computerSequence.length === playerSequence.length) {
+                            //alert("Correct, computers turn");
+                            playerSequence = [];
+                            computerTurn();
+                        } else {
+                            playerTurn = true;
+                        }
+                    }
+                    
+                }, 1000); // How long do you want the delay to be (in milliseconds)?
+
+                
+            }
+        }
+
     }
 }
 

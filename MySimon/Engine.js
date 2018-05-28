@@ -15,10 +15,15 @@
  *
  */
 var gameOn = false;
+var playerTurn = false;
+//var colors = ['darkred', 'darkorange', 'darkblue', 'darkgreen'];
+var colors = ['rgb(139,0,0)', 'rgb(255,140,0)', 'rgb(0,0,139)', 'rgb(0,100,0)'];
 var score = 0;
 var strictOn = false;
 var states = [false, false, false, false];
 var computerSequence = [];
+var playerSequence = [];
+
 
 var Engine = (function (global) {
     /* Predefine the variables we'll be using within this scope,
@@ -30,7 +35,7 @@ var Engine = (function (global) {
     
 
     var litcolors = ['red', 'yellow', 'lightblue', 'lightgreen'];
-    var colors = ['darkred', 'darkorange', 'darkblue', 'darkgreen'];
+    
 
     var doc = global.document,
         win = global.window,
@@ -162,7 +167,6 @@ var Engine = (function (global) {
         ctx.translate(canvas.width / 2, canvas.height / 2);
         var i;
         for (i = 0; i < 4; i++) {
-            //states[i] = (litquadrant == i);
             slice(i);
         }
         ctx.translate(canvas.width / 2, canvas.height / 2);
@@ -189,21 +193,18 @@ var Engine = (function (global) {
         //ctx.rotate(-quadrant * Math.PI / 2);
     }
     var writeMessage = function (context, x, y, message) {
-        //var context = canvas.getContext('2d');
         context.clearRect(x, y - 10, canvas.width, 10);
         context.font = '42pt Pacifico';
         context.fillStyle = 'black';
         context.fillText(message, x, y);
     }
     var writeMessage2 = function (context, x, y, message) {
-        //var context = canvas.getContext('2d');
         context.clearRect(x, y - 10, canvas.width, 10);
         context.font = '8pt Calibri';
         context.fillStyle = 'black';
         context.fillText(message, x, y);
     }
     var writeMessage3 = function (context, x, y, message) {
-        //var context = canvas.getContext('2d');
         //console.log("writeMessage3 function called");
         context.fillRect(x - 5, y - 20, 30, 30);
         context.font = '15pt Calibri';
