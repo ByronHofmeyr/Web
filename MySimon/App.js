@@ -90,39 +90,46 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function addQuadrant() {
+const delay = (duration) =>
+    new Promise(resolve => setTimeout(resolve, duration));
+
+async function addQuadrant() {
     var randomInt = getRandomInt(0, 3);
     console.log("randomInt = ", randomInt);
     // Light colour and play sound
     states[randomInt] = true;
     //console.log("states = ", states);
-    setTimeout(function () {
+    //setTimeout(function () {
+    await delay(1000);
         states[randomInt] = false;
         computerSequence.push(randomInt);
         console.log("computerSequence = ", computerSequence);
         playerTurn = true;
         //return true;
-    }, 1000); // How long do you want the delay to be (in milliseconds)?
+    //}, 1000); // How long do you want the delay to be (in milliseconds)?
 }
 
-function playComputerSequence(counter) {
+async function playComputerSequence(counter) {
     if (counter < computerSequence.length) {
-        setTimeout(function () {
+        //setTimeout(function () {
+        await delay(300);
             states[computerSequence[counter]] = true;
             console.log("states[computerSequence[counter]]: ", states);
-            setTimeout(function () {
+            //setTimeout(function () {
+        await delay(1000);
                 console.log("The index of this number is: " + counter);
                 states[computerSequence[counter]] = false;
                 console.log("states: ", states);
                 counter++;
                 playComputerSequence(counter);
-            }, 1000);
-        }, 300);
+            //}, 1000);
+        //}, 300);
     } else {
-        setTimeout(function () {
+        //setTimeout(function () {
             //return true;
+        await delay(300);
             addQuadrant();
-        }, 300);
+        //}, 300);
     }
     //return true;
 }
