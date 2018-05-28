@@ -73,12 +73,9 @@ var Engine = (function (global) {
         * function again as soon as the browser is able to draw another frame.
         */
 
-        //setTimeout(function () {
-        update(dt);
         render();
 
         win.requestAnimationFrame(main);
-        //}, 1000); // How long do you want the delay to be (in milliseconds)?
     }
 
     /* This function does some initial setup that should only occur once,
@@ -91,27 +88,6 @@ var Engine = (function (global) {
         lastTime = Date.now();
         render();
         main();
-    }
-
-    /* This function is called by main (our game loop) and itself calls all
-     * of the functions which may need to update entity's data. 
-     */
-    function update(dt) {
-        updateEntities(dt);
-    }
-
-    /* This is called by the update function and loops through all of the
-     * objects within your allEnemies array as defined in app.js and calls
-     * their update() methods. It will then call the update function for your
-     * player object. These update methods should focus purely on updating
-     * the data/properties related to the object. Do your drawing in your
-     * render methods.
-     */
-    function updateEntities(dt) {
-        /* ...*/
-        //console.log("updateEntities(dt) function called");
-        //writeMessage3(ctx, 190, 282, "04");
-        //player.update();
     }
 
     /* This function initially draws the "game level", it will then call
@@ -224,7 +200,7 @@ var Engine = (function (global) {
     var scoreText = function (score) {
         // convert score to a two diget string
         if (gameOn) {
-            if (score == 0) {
+            if (score === 0) {
                 return "---";
             } else {
                 if (score < 10) {
@@ -245,6 +221,9 @@ var Engine = (function (global) {
      */
     function reset() {
         console.log("reset function called");
+        score = 0;
+        states = [false, false, false, false];
+        computerSequence = [];
         // noop
     }
 
