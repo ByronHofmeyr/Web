@@ -23,7 +23,7 @@ var Engine = (function (global) {
      * create the canvas element, grab the 2D context for that canvas
      * set the canvas elements height/width and add it to the DOM.
      */
-    
+
     var litcolors = ['red', 'yellow', 'lightblue', 'lightgreen'];
     
     var doc = global.document,

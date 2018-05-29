@@ -13,6 +13,8 @@ async function addQuadrant() {
     await console.log("randomInt = ", randomInt);
     // Light colour and play sound
     states[randomInt] = true;
+    console.log("call audio from addQuadrant");
+    audio(randomInt);
     await delay(1000);
     states[randomInt] = false;
     await    computerSequence.push(randomInt);
@@ -24,6 +26,8 @@ async function playComputerSequence(counter) {
     if (counter < computerSequence.length) {
         await delay(300);
         states[computerSequence[counter]] = true;
+        console.log("call audio from playComputerSequence counter = ", counter);
+        audio(computerSequence[counter]);
         await console.log("states[computerSequence[counter]]: ", states);
         await delay(1000);
         await    console.log("The index of this number is: " + counter);
@@ -114,6 +118,8 @@ async function actionMouseUp(canvas, evt) {
                 console.log('click on quadrant = ', selected);
                 // Light colour and play sound
                 states[selected] = true;
+                console.log("call audio from Mouseup");
+                audio(selected);
                 playerTurn = false;
                 //console.log("states = ", states);
                 await delay(1000);
