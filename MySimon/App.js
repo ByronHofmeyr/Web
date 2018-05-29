@@ -43,6 +43,18 @@ async function playComputerSequence(counter) {
 async function computerTurn() {
     // Add 1 to score
     score++;
+    if (score > 20) {
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //should call engine reset for these three lines
+        alert("Well done you win!");
+        score = 0;
+        states = [false, false, false, false];
+        computerSequence = [];
+        playerSequence = [];
+        playerTurn = false;
+        computerTurn();
+        return;
+    }
     // play playedArray then add random quadrant
     await playComputerSequence(0);
     await delay(300);
@@ -102,7 +114,7 @@ async function actionMouseUp(canvas, evt) {
     //if (x > 243 && x < 260 && y > 279 && y < 294) {
     if (hasSameColor(color, colors[6])) {
         // Start game
-        if (gameOn) {
+        if (gameOn && score === 0) {
             console.log("Start ");
             computerTurn();
         }
