@@ -9,8 +9,8 @@
 // Declare global variables
 var gameOn = false;
 var playerTurn = false;
-//var colors = ['darkred', 'darkorange', 'darkblue', 'darkgreen'];
-var colors = ['rgb(139,0,0)', 'rgb(255,140,0)', 'rgb(0,0,139)', 'rgb(0,100,0)'];
+//var colors = ['darkred'   , 'darkorange'    , 'darkblue'    , 'darkgreen'   , 'greyish',     , 'yellow'        , 'redish'];
+var colors = ['rgb(139,0,0)', 'rgb(255,140,0)', 'rgb(0,0,139)', 'rgb(0,100,0)', 'rgb(42,48,60)', 'rgb(255,255,0)', 'rgb(254,0,0)'];
 var score = 0;
 var strictOn = false;
 var states = [false, false, false, false];
@@ -35,6 +35,7 @@ var Engine = (function (global) {
     canvas.width = 500;
     canvas.height = 500;
     doc.body.appendChild(canvas);
+    //canvas.style.cursor = "crosshair";
 
     /* This function serves as the kickoff point for the game loop itself
      * and handles properly calling the render method.
@@ -60,16 +61,12 @@ var Engine = (function (global) {
     /* This function initially draws the "game level"
      */
     function render() {
-        /* 
-         */
         //console.log("render function");
         litquadrant = -1;
         // Before drawing, clear existing canvas
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        //writeMessage(ctx, 10, 25, "" + score);
         writeMessage(ctx, 176, 234, "Simon");
-
         writeMessage2(ctx, 184, 300, "COUNT");
         writeMessage2(ctx, 239, 300, "START");
         writeMessage2(ctx, 285, 300, "STRICT");
@@ -78,9 +75,9 @@ var Engine = (function (global) {
         writeMessage3(ctx, 190, 282, scoreText(score));
 
         //Draw a circle red
-        drawCircle(ctx, 252, 275, 8, "red");
+        drawCircle(ctx, 252, 275, 8, colors[6]);
         //Draw a circle yellow
-        drawCircle(ctx, 298, 275, 8, "yellow");
+        drawCircle(ctx, 298, 275, 8, colors[5]);
         //Draw a circle small red
         if (strictOn && gameOn) {
             drawCircle(ctx, 298, 258, 3, "red");
@@ -89,7 +86,7 @@ var Engine = (function (global) {
         }
 
         //Draw recangle
-        ctx.fillStyle = '#2a303a';
+        ctx.fillStyle = colors[4];
         ctx.fillRect(235, 320, 40, 14);
 
         //Draw recangle
@@ -111,6 +108,7 @@ var Engine = (function (global) {
         ctx.translate(canvas.width / 2, canvas.height / 2);
 
     }
+    
     var slice = function (quadrant) {
         ctx.rotate(quadrant * Math.PI / 2);
         ctx.beginPath();
@@ -177,6 +175,7 @@ var Engine = (function (global) {
         }
 
     };
+    
 
     function reset() {
         console.log("reset function called");

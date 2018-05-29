@@ -1,6 +1,6 @@
 ﻿/////////////////////////////////////////////////////////////////////////////////////////
+// App.js
 
-// This is the starting point and is called from HTML onload
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
@@ -61,10 +61,16 @@ function compareSequence(playerSequence, computerSequence) {
 
 async function actionMouseUp(canvas, evt) {
     var rect = canvas.getBoundingClientRect();
-    x = (evt.clientX - rect.left) / (rect.right - rect.left) * canvas.width;
+    x = (evt.clientX - rect.left) / (rect.right - rect.left) * canvas.width ;
     y = (evt.clientY - rect.top) / (rect.bottom - rect.top) * canvas.height;
-    ctx.fillRect(235, 320, 40, 14);
-    if (x > 235 && x < 275 && y > 329 && y < 343) {
+    // Check the color to find where your mouse clicked.
+    // get pixel under cursor
+    const pixel = ctx.getImageData(x, y-11, 1, 1).data;
+    // create rgb color for that pixel
+    const color = `rgb(${pixel[0]},${pixel[1]},${pixel[2]})`;
+    console.log("color ", color);
+    console.log("colors[4] ", colors[4]);
+    if (hasSameColor(color, colors[4]))  {
         // switch game on or off
         if (gameOn) {
             gameOn = false;
@@ -74,14 +80,14 @@ async function actionMouseUp(canvas, evt) {
             score = 0;
             states = [false, false, false, false];
             computerSequence = [];
-
+        
         } else {
             gameOn = true;
         }
         console.log("gameOn = ", gameOn);
-        
     }
-    if (x > 290 && x < 306 && (y > 279 && y < 295)) {
+    //if (x > 290 && x < 306 && (y > 279 && y < 295)) {
+    if (hasSameColor(color, colors[5])) {
         // switch strict on or off
         if (gameOn) {
             if (strictOn) {
@@ -93,7 +99,8 @@ async function actionMouseUp(canvas, evt) {
         console.log("strictOn = ", strictOn);
 
     }
-    if (x > 243 && x < 260 && y > 279 && y < 294) {
+    //if (x > 243 && x < 260 && y > 279 && y < 294) {
+    if (hasSameColor(color, colors[6])) {
         // Start game
         if (gameOn) {
             console.log("Start ");
@@ -103,13 +110,7 @@ async function actionMouseUp(canvas, evt) {
     //Check for a quadrand pressed
     if (gameOn && playerTurn) {
         //console.log("Waiting for quadrant press ");
-        // Check the color to find the quadrent you are in.
-        // get pixel under cursor
-        const pixel = ctx.getImageData(x, y, 1, 1).data;
-        
-        // create rgb color for that pixel
-        const color = `rgb(${pixel[0]},${pixel[1]},${pixel[2]})`;
-        //console.log("color ", color);
+
         // find a quadrent with the same colour
         var i;
         for (i = 0; i < 4; i++) {
