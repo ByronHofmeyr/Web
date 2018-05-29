@@ -13,7 +13,6 @@ async function addQuadrant() {
     await console.log("randomInt = ", randomInt);
     // Light colour and play sound
     states[randomInt] = true;
-    //console.log("states = ", states);
     await delay(1000);
     states[randomInt] = false;
     await    computerSequence.push(randomInt);
@@ -47,25 +46,12 @@ async function computerTurn() {
     //console.log("computerTurn");
 }
 
-/*
-function getMousePos(canvas, evt) {
-    var rect = canvas.getBoundingClientRect();
-    x = (evt.clientX - rect.left) / (rect.right - rect.left) * canvas.width;
-    y = (evt.clientY - rect.top) / (rect.bottom - rect.top) * canvas.height;
-    console.log("mouseX :",x, " mouseY :", y);
-}
-*/
-
 function hasSameColor(color, quadrant) {
-    //console.log("color = ", color);
-    //console.log("quadrant = ", quadrant);
     return quadrant === color;
 }
 
 function compareSequence(playerSequence, computerSequence) {
     // compare the computer sequence to the player sequence
-    //console.log("playerSequence = ", playerSequence);
-    //console.log("computerSequence = ", computerSequence);
     return playerSequence === computerSequence; 
 }
 
@@ -103,7 +89,7 @@ async function actionMouseUp(canvas, evt) {
         console.log("strictOn = ", strictOn);
 
     }
-    if ((x > 243 && x < 260) && (y > 279 && y < 294)) {
+    if (x > 243 && x < 260 && y > 279 && y < 294) {
         // Start game
         if (gameOn) {
             console.log("Start ");
@@ -167,12 +153,7 @@ async function actionMouseUp(canvas, evt) {
     }
 }
 
-
-console.log("instantiate your objects");
 // This listens for mouse movements and sends the cordinates to
+document.addEventListener("mouseup", function (e) { actionMouseUp(canvas, e); }, false);
 
-//document.addEventListener("mousemove", (function (e) { getMousePos(canvas, e); }), false);
-document.addEventListener("mouseup", (function (e) { actionMouseUp(canvas, e); }), false);
-        //player.handleInput(allowedKeys[e.keyCode]);
-    //});
 

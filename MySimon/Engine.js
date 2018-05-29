@@ -1,19 +1,12 @@
 ﻿/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /* Engine.js
- * This code provides the game loop functionality (update entities and render),
- * draws the initial game board on the screen, and then calls the update and
- * render methods.
+ * This code provides the game loop functionality (render),
+ * draws the initial game board on the screen, and then calls render method.
  *
- * A game engine works by drawing the entire game screen over and over, kind of
- * like a flipbook you may have created as a kid. When your player moves across
- * the screen, it may look like just that image/character is moving or being
- * drawn but that is not the case. What's really happening is the entire "scene"
- * is being drawn over and over, presenting the illusion of animation.
- *
- * This engine makes the canvas' context (ctx) object globally available to make 
- * writing app.js a little simpler to work with.
- *
+ * A game engine works by drawing the entire game screen over and over.
  */
+
+// Declare global variables
 var gameOn = false;
 var playerTurn = false;
 //var colors = ['darkred', 'darkorange', 'darkblue', 'darkgreen'];
@@ -31,12 +24,8 @@ var Engine = (function (global) {
      * set the canvas elements height/width and add it to the DOM.
      */
     
-    //var gameOn = false;
-    
-
     var litcolors = ['red', 'yellow', 'lightblue', 'lightgreen'];
     
-
     var doc = global.document,
         win = global.window,
         canvas = doc.createElement('canvas'),
@@ -48,39 +37,17 @@ var Engine = (function (global) {
     doc.body.appendChild(canvas);
 
     /* This function serves as the kickoff point for the game loop itself
-     * and handles properly calling the update and render methods.
+     * and handles properly calling the render method.
      */
     function main() {
-        /* Get our time delta information which is required if your game
-         * requires smooth animation. Because everyone's computer processes
-         * instructions at different speeds we need a constant value that
-         * would be the same for everyone (regardless of how fast their
-         * computer is) - hurray time!
-         */
-        var now = Date.now(),
-            dt = (now - lastTime) / 1000.0; // was 1000.0
-
-        /* Call our update/render functions, pass along the time delta to
-         * our update function since it may be used for smooth animation.
-         */
-
-        /* Set our lastTime variable which is used to determine the time delta
-         * for the next time this function is called.
-         */
-        lastTime = now;
-
         /* Use the browser's requestAnimationFrame function to call this
         * function again as soon as the browser is able to draw another frame.
         */
-
         render();
-
         win.requestAnimationFrame(main);
     }
 
-    /* This function does some initial setup that should only occur once,
-     * particularly setting the lastTime variable that is required for the
-     * game loop.
+    /* This function does some initial setup that should only occur once.
      */
     function init() {
         console.log("init function called");
@@ -90,11 +57,7 @@ var Engine = (function (global) {
         main();
     }
 
-    /* This function initially draws the "game level", it will then call
-     * the renderEntities function. Remember, this function is called every
-     * game tick (or loop of the game engine) because that's how games work -
-     * they are flipbooks creating the illusion of animation but in reality
-     * they are just drawing the entire screen over and over.
+    /* This function initially draws the "game level"
      */
     function render() {
         /* 
@@ -102,7 +65,7 @@ var Engine = (function (global) {
         //console.log("render function");
         litquadrant = -1;
         // Before drawing, clear existing canvas
-        ctx.clearRect(0, 0, canvas.width, canvas.height)
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
 
         //writeMessage(ctx, 10, 25, "" + score);
         writeMessage(ctx, 176, 234, "Simon");
@@ -167,26 +130,26 @@ var Engine = (function (global) {
         ctx.lineWidth = 20;
         ctx.stroke();
         //ctx.rotate(-quadrant * Math.PI / 2);
-    }
+    };
     var writeMessage = function (context, x, y, message) {
         context.clearRect(x, y - 10, canvas.width, 10);
         context.font = '42pt Pacifico';
         context.fillStyle = 'black';
         context.fillText(message, x, y);
-    }
+    };
     var writeMessage2 = function (context, x, y, message) {
         context.clearRect(x, y - 10, canvas.width, 10);
         context.font = '8pt Calibri';
         context.fillStyle = 'black';
         context.fillText(message, x, y);
-    }
+    };
     var writeMessage3 = function (context, x, y, message) {
         //console.log("writeMessage3 function called");
         context.fillRect(x - 5, y - 20, 30, 30);
         context.font = '15pt Calibri';
         context.fillStyle = 'red';
         context.fillText(message, x, y);
-    }
+    };
     var drawCircle = function (context, x, y, radius, color) {
         //Draw a circle
         context.beginPath();
@@ -196,7 +159,7 @@ var Engine = (function (global) {
         context.strokeStyle = '#2a303a';
         context.lineWidth = 2;
         context.stroke();
-    }
+    };
     var scoreText = function (score) {
         // convert score to a two diget string
         if (gameOn) {
@@ -213,18 +176,14 @@ var Engine = (function (global) {
             return "";
         }
 
-    }
+    };
 
-    /* This function does nothing but it could have been a good place to
-     * handle game reset states - maybe a new game menu or a game over screen
-     * those sorts of things. It's only called once by the init() method.
-     */
     function reset() {
         console.log("reset function called");
         score = 0;
         states = [false, false, false, false];
         computerSequence = [];
-        // noop
+
     }
 
     // Call init() to instantiate the game
